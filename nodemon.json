@@ -1,0 +1,8 @@
+{
+    "env":{
+        "PORT": 5000,
+        "HOST": "fakelook.60grq.mongodb.net/myFirstDatabase",
+        "DB": "fakelookDb",
+        "PASSWORD": "egp4ewp6GR5hVDJo"
+    }
+}
