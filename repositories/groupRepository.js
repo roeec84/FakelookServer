@@ -50,7 +50,9 @@ const getUserGroups = async (userId) => {
     }
 }
 
-module.exports.addGroup = addGroup;
-module.exports.removeGroup = removeGroup;
-module.exports.editGroup = editGroup;
-module.exports.getUserGroups = getUserGroups;
+module.exports = {
+    addGroup,
+    removeGroup,
+    editGroup,
+    getUserGroups
+}

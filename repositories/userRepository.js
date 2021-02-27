@@ -68,8 +68,10 @@ const getUserById = async (id) => {
     }
 }
 
-module.exports.addUser = addUser;
-module.exports.removeUser = removeUser;
-module.exports.editUser = editUser;
-module.exports.getAllUsers = getAllUsers;
-module.exports.getUserById = getUserById;
+module.exports = {
+    addUser,
+    removeUser,
+    editUser,
+    getAllUsers,
+    getUserById
+}

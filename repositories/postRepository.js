@@ -71,8 +71,10 @@ const getPostsByRadius = async (lat, long, radius) => {
     }
 }
 
-module.exports.addPost = addPost;
-module.exports.removePost = removePost;
-module.exports.editPost = editPost;
-module.exports.getPostsByUser = getPostsByUser;
-module.exports.getPostsByRadius = getPostsByRadius;
+module.exports = {
+    addPost,
+    removePost,
+    editPost,
+    getPostsByUser,
+    getPostsByRadius
+}
