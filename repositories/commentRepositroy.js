@@ -51,7 +51,9 @@ const getPostComments = async (postId) => {
     }
 }
 
-module.exports.addComment = addComment;
-module.exports.removeComment = removeComment;
-module.exports.editComment = editComment;
-module.exports.getPostComments = getPostComments;
+module.exports = {
+    addComment,
+    removeComment,
+    editComment,
+    getPostComments
+}
