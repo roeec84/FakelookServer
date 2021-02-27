@@ -35,7 +35,11 @@ const postSchema = new mongoose.Schema({
     tags: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tag'
-    }]
+    }],
+    taggedUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 })
 
 const Post = mongoose.model('Post', postSchema);
@@ -48,8 +52,9 @@ const validate = (post) => {
         lat: Joi.number().required().label('Latitude'),
         long: Joi.number().required().label('Longitude'),
         date: Joi.date().label('Date'),
-        likes: Joi.any().label('Likes'),
-        tags: Joi.any().label('Tags'),
+        likes: Joi.array().items(Joi.objectId()).label('Likes'),
+        tags: Joi.array().items(Joi.objectId()).label('Tags'),
+        taggedUsers: Joi.array().items(Joi.objectId()).label('Tagged users'),
     })
     return schema.validate(post, {
         abortEarly: false
