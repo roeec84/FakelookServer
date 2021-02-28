@@ -1,39 +1,65 @@
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi)
 const mongoose = require('mongoose')
 
 const postSchema = new mongoose.Schema({
-    userName: {
-        type: String,
-        required: true,
-        minlength: 4,
-        maxlength: 16
-    },
-    text: {
-        type: String,
-        required: false,
-        minlength: 2,
-        maxlength: 16
-    },
-    image: {
-        type: URL,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
-    location: {
-        type: //location,
-        required=true
-    },
-    tags: {
+    description: {
         type: String,
-        required: false
+        maxlength: 300
     },
-    taggedUsers: {
-        type: String,
-        required: false
+    image: {
+        type: Buffer,
+        required: true
     },
-    likes: {
-    //Unknown
-    }
+    lat: {
+        type: Number,
+        required: true
+    },
+    long: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
+    taggedUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 })
 
 const Post = mongoose.model('Post', postSchema);
 
+const validate = (post) => {
+    const schema = Joi.object({
+        user: Joi.objectId().required().label('User'),
+        description: Joi.string().max(300).label('Description'),
+        image: Joi.any().required().label('Image'), //Change later
+        lat: Joi.number().required().label('Latitude'),
+        long: Joi.number().required().label('Longitude'),
+        date: Joi.date().label('Date'),
+        likes: Joi.array().items(Joi.objectId()).label('Likes'),
+        tags: Joi.array().items(Joi.objectId()).label('Tags'),
+        taggedUsers: Joi.array().items(Joi.objectId()).label('Tagged users'),
+    })
+    return schema.validate(post, {
+        abortEarly: false
+    })
+}
+
 module.exports.Post = Post;
+module.exports.validate = validate;
