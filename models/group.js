@@ -2,7 +2,6 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose')
 
-
 const groupSchema = new mongoose.Schema({
     name: {
         type: String,

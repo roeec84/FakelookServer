@@ -32,6 +32,8 @@ const getTagByTitle = async (title) => {
     }
 }
 
-module.exports.addTag = addTag;
-module.exports.getAllTags = getAllTags;
-module.exports.getTagByTitle = getTagByTitle;
+module.exports = {
+    addTag,
+    getAllTags,
+    getTagByTitle
+}
