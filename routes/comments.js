@@ -2,10 +2,14 @@ const { addComment } = require('../repositories/commentReposutory');
 
 const router = require('express').Router();
 
-router.post('/', 
-async (req, res) => {
-    const idUser = await addComment()
-    res.send(`comment added by the user ${idUser}.`)
+router.post('/',
+    async (req, res) => {
+        try {
+            const newComment = await addComment()
+            res.send(newComment);
+        } catch(err){
+            res.status(400).send(err);
+        }
 });
 
 
