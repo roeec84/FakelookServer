@@ -4,7 +4,7 @@ const addUser = async (user) => {
     const newUser = new User({
         firstName: user.firstName,
         lastName: user.lastName,
-        username: username,
+        username: user.username,
         email: user.email,
         password: user.password,
         dateOfBirth: user.dateOfBirth,
@@ -68,10 +68,20 @@ const getUserById = async (id) => {
     }
 }
 
+const getUserByUsername = async (username) => {
+    try {
+        const user = await User.findOne({username: username});
+        return user;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     addUser,
     removeUser,
     editUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    getUserByUsername
 }
