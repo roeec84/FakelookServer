@@ -19,7 +19,7 @@ const login = async (username, password) => {
             {
                 expiresIn: "15m"
             })
-        return token;
+        return {token: token, user: _.pick(user, ['_id', 'username', 'email', 'firstName', 'lastName', 'address', 'dateOfBirth'])};;
     } catch (error) {
         return { message: 'Invalid username or password' };
     }
@@ -28,7 +28,7 @@ const login = async (username, password) => {
 const register = async (user) => {
     const newUser = await addUser(user);
     const { error } = newUser;
-    if (error) return error;
+    if (error) return [{message: error}];
     const token = jwt.sign({
         username: user.username,
         email: user.email,
