@@ -3,10 +3,10 @@ const { login, register } = require('../services/loginService');
 const router = require('express').Router();
 
 router.post('/', async (req, res) => {
-    const token = await login(req.body.username, req.body.password);
-    const { message } = token;
+    const result = await login(req.body.username, req.body.password);
+    const { message } = result;
     if (message) return res.send({ message: message });
-    res.send(token);
+    res.send(result);
 })
 
 router.post('/register', async (req, res) => {
