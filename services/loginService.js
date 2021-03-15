@@ -10,16 +10,9 @@ const login = async (username, password) => {
     try {
         const pass = await bcrypt.compare(password, user.password)
         if (!pass) return { message: 'Invalid username or password' };
-        const token = jwt.sign({
-            username: username,
-            email: user.email,
-            _id: user._id
-        },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "15m"
-            })
-        return {token: token, user: _.pick(user, ['_id', 'username', 'email', 'firstName', 'lastName', 'address', 'dateOfBirth'])};;
+        console.log('login', user);
+        const token = generateToken(user);
+        return { token: token, user: _.pick(user, ['_id', 'username', 'email', 'firstName', 'lastName', 'address', 'dateOfBirth']) };;
     } catch (error) {
         return { message: 'Invalid username or password' };
     }
@@ -28,20 +21,29 @@ const login = async (username, password) => {
 const register = async (user) => {
     const newUser = await addUser(user);
     const { error } = newUser;
-    if (error) return [{message: error}];
-    const token = jwt.sign({
+    if (error) return [{ message: error }];
+    const token = generateToken(user);
+    return { token: token, user: _.pick(newUser, ['_id', 'username', 'email', 'firstName', 'lastName', 'address', 'dateOfBirth']) };
+}
+
+const generateToken = (user) => {
+    return jwt.sign({
         username: user.username,
         email: user.email,
-        _id: user._id
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        dateOfBirth: user.dateOfBirth,
+        id: user._id
     },
         process.env.JWT_SECRET,
         {
             expiresIn: "15m"
-        })
-    return {token: token, user: _.pick(newUser, ['_id', 'username', 'email', 'firstName', 'lastName', 'address', 'dateOfBirth'])};
+        });
 }
 
 module.exports = {
     login,
-    register
+    register,
+    generateToken
 }

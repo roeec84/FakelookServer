@@ -37,7 +37,11 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true
-    }
+    },
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }]
 })
 
 const User = mongoose.model('User', userSchema);

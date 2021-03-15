@@ -1,6 +1,11 @@
-const { login, register } = require('../services/loginService');
-
+const { login, register, generateToken } = require('../services/loginService');
+const auth = require('../middlewares/auth');
 const router = require('express').Router();
+
+router.get('/me', auth, (req, res) => {
+    const token = generateToken(req.user);
+    res.send({token: token, user: req.user})
+});
 
 router.post('/', async (req, res) => {
     const result = await login(req.body.username, req.body.password);
