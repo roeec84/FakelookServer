@@ -1,6 +1,5 @@
 const postRepository = require('../repositories/postRepository')
 const { validate } = require('../models/post');
-const { post } = require('../routes/users');
 
 const addPost = async (post) => {
     const { error } = validate(post);
@@ -11,6 +10,7 @@ const addPost = async (post) => {
     }
     let res = await postRepository.addPost(post);
     return res;
+
 }
 
 const removePost = async (id) => {

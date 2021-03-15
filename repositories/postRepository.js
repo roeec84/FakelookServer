@@ -4,10 +4,9 @@ const addPost = async (post) => {
     const newPost = new Post({
         user: post.user,
         description: post.description,
-        image: post.image,
+        image: Buffer.from(post.image, 'base64'),
         lat: post.lat,
         long: post.long,
-        date: post.date,
         likes: [],
         tags: post.tags,
         taggedUsers: post.taggedUsers
